@@ -1,0 +1,10 @@
+{
+    "msgType": "StartTask",
+    "taskId": 1,
+    "name": "moveArmtoStaircase",
+    "resources": [
+        "amr2"
+    ],
+    "structureType": "staircase",
+    "location": "Robot-Arm-2"
+}
