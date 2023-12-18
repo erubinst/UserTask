@@ -10,7 +10,7 @@ import requests
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 
 # Initialize an empty DataFrame to store tasks
-tasks_df = pd.DataFrame(columns=['name', 'structureType', 'taskId'])
+tasks_df = pd.DataFrame(columns=['name', 'structureType', 'resources', 'taskId'])
 latest_received_message = None
 
 app.layout = dbc.Container([
@@ -18,7 +18,8 @@ app.layout = dbc.Container([
     html.Div([
         dbc.Row([
             dbc.Col(html.Div("Name", className='fw-bold fs-4'), width=2),
-            dbc.Col(html.Div("Product", className='fw-bold fs-4'), width=2)
+            dbc.Col(html.Div("Product", className='fw-bold fs-4'), width=2),
+            dbc.Col(html.Div("Resources", className='fw-bold fs-4'), width=2)
         ]),
         dbc.Row(html.Br())
     ]),
@@ -48,6 +49,7 @@ def update_task_list_helper():
         task_rows.append(dbc.Row([
             dbc.Col(html.Div(f"{row['name']}"), width=4),
             dbc.Col(html.Div(f"{row['structureType']}"), width=4),
+            dbc.Col(html.Div(f"{row['resources']}"), width=4),
             dbc.Row(html.Br())
         ]))
     return task_rows
@@ -66,9 +68,10 @@ def update_task_list_and_button(n_intervals):
     name = new_task_msg.get('name', 'Unknown')
     structure_type = new_task_msg.get('structureType', 'Unknown')
     taskId = new_task_msg.get('taskId', 'Unknown')
+    resources = new_task_msg.get('resources', 'Unknown')
 
     # Append the new task information to the DataFrame
-    tasks_df.loc[(len(tasks_df.index))] = [name, structure_type, taskId]
+    tasks_df.loc[(len(tasks_df.index))] = [name, structure_type, resources, taskId]
 
     task_rows = update_task_list_helper()
 
